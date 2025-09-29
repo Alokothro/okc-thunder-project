@@ -1,9 +1,9 @@
 {
     "build": {
-        "builder": "RAILPACK",
-        "buildCommand": "npm run build"
+        "builder": "NIXPACKS",
+        "buildCommand": "npm ci && npm run build"
     },
     "deploy": {
-        "startCommand": "npm run deploy"
+        "startCommand": "node server.js"
     }
 }
