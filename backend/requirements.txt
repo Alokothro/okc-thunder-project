@@ -23,6 +23,7 @@ ptyprocess
 Pygments
 python-dateutil
 pytz
+scipy
 six
 sqlparse
 toml
