@@ -148,7 +148,7 @@ def get_player_summary_stats(player_id: str) -> Dict[str, Any]:
                     action_data["totalPotentialAssists"] / action_data["totalTurnovers"], 2
                 )
             else:
-                action_data["assistToTurnoverRatio"] = float('inf') if action_data["totalPotentialAssists"] > 0 else 0.0
+                action_data["assistToTurnoverRatio"] = 999.99 if action_data["totalPotentialAssists"] > 0 else 0.0
 
             response[camel_case] = action_data
 
@@ -209,7 +209,7 @@ def calculate_advanced_metrics(player_id: int) -> Dict[str, Any]:
             "playerEfficiencyRating": round(per, 1),
             "usageRate": round(usage_rate, 1),
             "pointsPerShot": round(total_points / total_shots, 2) if total_shots > 0 else 0,
-            "assistToTurnoverRatio": round(assists / turnovers_count, 2) if turnovers_count > 0 else float('inf') if assists > 0 else 0,
+            "assistToTurnoverRatio": round(assists / turnovers_count, 2) if turnovers_count > 0 else 999.99 if assists > 0 else 0,
             "hotZones": hot_zones,
             "clutchStats": calculate_clutch_stats(player_id)
         }
