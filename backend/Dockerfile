@@ -31,4 +31,4 @@ RUN mkdir -p /app/static
 # Run migrations and start server
 CMD python manage.py migrate && \
     python manage.py collectstatic --noinput && \
-    gunicorn app.wsgi --bind 0.0.0.0:$PORT --workers 3 --timeout 120
+    gunicorn app.wsgi --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120 --access-logfile - --error-logfile -
