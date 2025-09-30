@@ -1,1 +1,320 @@
-<div class="placeholder">Place your content here!</div>
+<div class="player-summary-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <mat-spinner></mat-spinner>
+    <p>Loading player data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <mat-icon>error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadPlayerData()">Retry</button>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error && playerSummary" class="player-content">
+
+    <!-- Player Selection -->
+    <div class="player-selection">
+      <mat-form-field appearance="outline">
+        <mat-label>Select Player</mat-label>
+        <mat-select [(value)]="selectedPlayerId" (selectionChange)="onPlayerIdChange($event.value)">
+          <mat-option [value]="1">Player 1 (Pound)</mat-option>
+          <mat-option [value]="2">Player 2 (Buddy)</mat-option>
+          <mat-option [value]="3">Player 3 (Uncle Drew)</mat-option>
+          <mat-option [value]="4">Player 4 (Goofy)</mat-option>
+          <mat-option [value]="5">Player 5 (David Greene)</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Player Header -->
+    <div class="player-header">
+      <h1>{{ playerSummary.name }}</h1>
+      <div class="player-overview">
+        <div class="stat-card">
+          <span class="stat-label">Total Points</span>
+          <span class="stat-value">{{ playerSummary.totalPoints }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">FG%</span>
+          <span class="stat-value">{{ playerSummary.fieldGoalPercentage ? playerSummary.fieldGoalPercentage.toFixed(1) + '%' : '0.0%' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Assists</span>
+          <span class="stat-value">{{ playerSummary.totalPotentialAssists }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Turnovers</span>
+          <span class="stat-value">{{ playerSummary.totalTurnovers }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rankings Section -->
+    <div class="rankings-section" *ngIf="playerRanks">
+      <h2>Player Rankings</h2>
+      <div class="rankings-grid">
+        <div class="rank-card" [ngClass]="getRankColorClass(playerRanks.totalPointsRank)">
+          <span class="rank-label">Points</span>
+          <span class="rank-value">#{{ playerRanks.totalPointsRank }}</span>
+        </div>
+        <div class="rank-card" [ngClass]="getRankColorClass(playerRanks.totalPotentialAssistsRank)">
+          <span class="rank-label">Assists</span>
+          <span class="rank-value">#{{ playerRanks.totalPotentialAssistsRank }}</span>
+        </div>
+        <div class="rank-card" [ngClass]="getRankColorClass(playerRanks.totalShotAttemptsRank)">
+          <span class="rank-label">Shot Attempts</span>
+          <span class="rank-value">#{{ playerRanks.totalShotAttemptsRank }}</span>
+        </div>
+        <div class="rank-card" [ngClass]="getRankColorClass(playerRanks.totalTurnoversRank)">
+          <span class="rank-label">Turnovers</span>
+          <span class="rank-value">#{{ playerRanks.totalTurnoversRank }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Type Breakdown -->
+    <div class="action-type-section">
+      <h2>Performance by Action Type</h2>
+
+      <!-- Action Type Filter -->
+      <div class="action-type-filters">
+        <button mat-raised-button
+                [color]="selectedActionType === 'all' ? 'primary' : ''"
+                (click)="onActionTypeChange('all')">
+          All Actions
+        </button>
+        <button mat-raised-button
+                [color]="selectedActionType === 'pickAndRoll' ? 'primary' : ''"
+                (click)="onActionTypeChange('pickAndRoll')">
+          Pick & Roll
+        </button>
+        <button mat-raised-button
+                [color]="selectedActionType === 'isolation' ? 'primary' : ''"
+                (click)="onActionTypeChange('isolation')">
+          Isolation
+        </button>
+        <button mat-raised-button
+                [color]="selectedActionType === 'postUp' ? 'primary' : ''"
+                (click)="onActionTypeChange('postUp')">
+          Post-Up
+        </button>
+        <button mat-raised-button
+                [color]="selectedActionType === 'offBallScreen' ? 'primary' : ''"
+                (click)="onActionTypeChange('offBallScreen')">
+          Off-Ball Screen
+        </button>
+      </div>
+
+      <!-- Action Type Stats Grid -->
+      <div class="action-type-grid">
+        <mat-card class="action-card">
+          <mat-card-header>
+            <mat-card-title>Pick & Roll</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="action-stats">
+              <div class="stat-row">
+                <span>Points:</span>
+                <span>{{ playerSummary.pickAndRoll.totalPoints }}</span>
+              </div>
+              <div class="stat-row">
+                <span>FG%:</span>
+                <span>{{ playerSummary.pickAndRoll.fieldGoalPercentage.toFixed(1) }}%</span>
+              </div>
+              <div class="stat-row">
+                <span>Shots:</span>
+                <span>{{ playerSummary.pickAndRoll.totalShotAttempts }}</span>
+              </div>
+              <div class="stat-row">
+                <span>Assists:</span>
+                <span>{{ playerSummary.pickAndRoll.totalPotentialAssists }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card">
+          <mat-card-header>
+            <mat-card-title>Isolation</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="action-stats">
+              <div class="stat-row">
+                <span>Points:</span>
+                <span>{{ playerSummary.isolation.totalPoints }}</span>
+              </div>
+              <div class="stat-row">
+                <span>FG%:</span>
+                <span>{{ playerSummary.isolation.fieldGoalPercentage.toFixed(1) }}%</span>
+              </div>
+              <div class="stat-row">
+                <span>Shots:</span>
+                <span>{{ playerSummary.isolation.totalShotAttempts }}</span>
+              </div>
+              <div class="stat-row">
+                <span>Assists:</span>
+                <span>{{ playerSummary.isolation.totalPotentialAssists }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card">
+          <mat-card-header>
+            <mat-card-title>Post-Up</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="action-stats">
+              <div class="stat-row">
+                <span>Points:</span>
+                <span>{{ playerSummary.postUp.totalPoints }}</span>
+              </div>
+              <div class="stat-row">
+                <span>FG%:</span>
+                <span>{{ playerSummary.postUp.fieldGoalPercentage.toFixed(1) }}%</span>
+              </div>
+              <div class="stat-row">
+                <span>Shots:</span>
+                <span>{{ playerSummary.postUp.totalShotAttempts }}</span>
+              </div>
+              <div class="stat-row">
+                <span>Assists:</span>
+                <span>{{ playerSummary.postUp.totalPotentialAssists }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="action-card">
+          <mat-card-header>
+            <mat-card-title>Off-Ball Screen</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="action-stats">
+              <div class="stat-row">
+                <span>Points:</span>
+                <span>{{ playerSummary.offBallScreen.totalPoints }}</span>
+              </div>
+              <div class="stat-row">
+                <span>FG%:</span>
+                <span>{{ playerSummary.offBallScreen.fieldGoalPercentage.toFixed(1) }}%</span>
+              </div>
+              <div class="stat-row">
+                <span>Shots:</span>
+                <span>{{ playerSummary.offBallScreen.totalShotAttempts }}</span>
+              </div>
+              <div class="stat-row">
+                <span>Assists:</span>
+                <span>{{ playerSummary.offBallScreen.totalPotentialAssists }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Shot Chart Section -->
+    <div class="shot-chart-section">
+      <h2>Shot Chart</h2>
+
+      <!-- Shot Filters -->
+      <div class="shot-filters">
+        <mat-checkbox [(ngModel)]="filterOptions.showMadeShots" (ngModelChange)="drawCourt()">
+          Show Made Shots
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="filterOptions.showMissedShots" (ngModelChange)="drawCourt()">
+          Show Missed Shots
+        </mat-checkbox>
+      </div>
+
+      <!-- Court Canvas -->
+      <div class="court-container">
+        <canvas #courtCanvas></canvas>
+        <div class="shot-legend">
+          <div class="legend-item">
+            <span class="legend-marker made-2pt"></span>
+            <span>Made 2PT</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-marker made-3pt"></span>
+            <span>Made 3PT</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-marker missed"></span>
+            <span>Missed Shot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Chart Section -->
+    <div class="stats-chart-section">
+      <h2>Statistics Overview</h2>
+      <div class="chart-container">
+        <canvas #statsChart height="300"></canvas>
+      </div>
+    </div>
+
+    <!-- Advanced Metrics Section -->
+    <div class="advanced-metrics-section" *ngIf="playerSummary.advancedMetrics">
+      <h2>Advanced Metrics</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">True Shooting %</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.trueShootingPercentage.toFixed(1) }}%</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Player Efficiency</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.playerEfficiencyRating.toFixed(1) }}</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Assist/TO Ratio</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.assistToTurnoverRatio }}</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Usage Rate</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.usageRate.toFixed(1) }}%</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Points per Shot</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.pointsPerShot.toFixed(2) }}</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Clutch FG %</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics.clutchStats.clutchShootingPercentage.toFixed(1) }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hot Zones Section -->
+    <div class="hot-zones-section" *ngIf="playerSummary.advancedMetrics?.hotZones">
+      <h2>Hot Zones</h2>
+      <div class="hot-zones-grid">
+        <div class="zone-card" *ngFor="let zone of playerSummary.advancedMetrics.hotZones"
+             [ngClass]="'zone-' + zone.rating">
+          <h3>{{ zone.zone }}</h3>
+          <div class="zone-stats">
+            <div class="zone-stat">
+              <span>FG%:</span>
+              <span>{{ zone.percentage.toFixed(1) }}%</span>
+            </div>
+            <div class="zone-stat">
+              <span>Attempts:</span>
+              <span>{{ zone.shotsAttempted }}</span>
+            </div>
+            <div class="zone-stat">
+              <span>Rating:</span>
+              <span class="rating-badge">{{ zone.rating.toUpperCase() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

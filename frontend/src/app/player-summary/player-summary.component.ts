@@ -45,7 +45,7 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy, AfterViewInit 
   playerRanks: PlayerRanks | null = null;
 
   // UI state
-  selectedPlayerId = 0;
+  selectedPlayerId = 1; // Default to Player 1
   selectedActionType = 'all';
   loading = false;
   error: string | null = null;
@@ -107,13 +107,7 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    // Initialize visualizations after view is ready
-    setTimeout(() => {
-      if (this.playerSummary) {
-        this.drawCourt();
-        this.createStatsChart();
-      }
-    }, 100);
+    // Visualizations will be drawn after data loads in loadPlayerData()
   }
 
   ngOnDestroy(): void {
@@ -141,16 +135,18 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy, AfterViewInit 
           this.playerRanks = response.ranks || null;
           this.loading = false;
 
-          // Refresh visualizations
-          if (this.courtCanvas) {
-            this.drawCourt();
-            this.plotShots();
-          }
-          if (this.statsChart) {
-            this.createStatsChart();
-          }
-
+          // Trigger change detection first
           this.cdr.detectChanges();
+
+          // Refresh visualizations after DOM update
+          setTimeout(() => {
+            if (this.courtCanvas && this.courtCanvas.nativeElement) {
+              this.drawCourt();
+            }
+            if (this.statsChart && this.statsChart.nativeElement) {
+              this.createStatsChart();
+            }
+          }, 100);
         },
         error: (error) => {
           console.error('Error loading player data:', error);
@@ -437,21 +433,6 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy, AfterViewInit 
     this.loadPlayerData();
   }
 
-  /**
-   * Toggle made shots visibility
-   */
-  toggleMadeShots(): void {
-    this.filterOptions.showMadeShots = !this.filterOptions.showMadeShots;
-    this.drawCourt();
-  }
-
-  /**
-   * Toggle missed shots visibility
-   */
-  toggleMissedShots(): void {
-    this.filterOptions.showMissedShots = !this.filterOptions.showMissedShots;
-    this.drawCourt();
-  }
 
   /**
    * Get action type display name

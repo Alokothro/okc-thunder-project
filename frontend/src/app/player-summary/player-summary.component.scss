@@ -1,8 +1,634 @@
+// OKC Thunder Brand Colors
+$thunder-blue: #007AC1;
+$thunder-orange: #EF3B24;
+$thunder-yellow: #FDBB30;
+$thunder-navy: #002D62;
+$thunder-dark: #1C2B3A;
+$thunder-light-blue: #00A9E0;
+
+// Grays and supporting colors
+$light-gray: #F5F7FA;
+$medium-gray: #E8EAED;
+$dark-gray: #4A5568;
+$text-dark: #2D3748;
+$text-light: #718096;
+
 player-summary-component {
-  .placeholder {
-    height: 600px;
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5F7FA 0%, #E8EAED 100%);
+
+  // Container
+  .player-summary-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  // Loading and Error States
+  .loading-state,
+  .error-state,
+  .initial-state {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+
+    mat-spinner {
+      margin-bottom: 1.5rem;
+    }
+
+    mat-icon {
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      color: $thunder-blue;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      color: $text-light;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      background: $thunder-blue;
+      color: white;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $thunder-navy;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 122, 193, 0.3);
+      }
+    }
+
+    .player-selection-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+
+      mat-form-field {
+        width: 300px;
+      }
+    }
+  }
+
+  // Player Selection
+  .player-selection {
+    margin-bottom: 2rem;
+
+    mat-form-field {
+      width: 280px;
+      background: white;
+      border-radius: 12px;
+      padding: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // Player Header
+  .player-header {
+    background: linear-gradient(135deg, $thunder-navy 0%, $thunder-dark 100%);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 45, 98, 0.25);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 122, 193, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    h1 {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 2rem 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .player-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.25);
+          transform: translateY(-4px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-label {
+          display: block;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+          display: block;
+          color: white;
+          font-size: 2rem;
+          font-weight: 700;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+
+  // Rankings Section
+  .rankings-section {
+    margin-bottom: 2rem;
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .rankings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+
+      .rank-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-left: 4px solid $thunder-blue;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0, 122, 193, 0.2);
+        }
+
+        &.rank-excellent {
+          border-left-color: #10B981;
+          background: linear-gradient(135deg, white 0%, #F0FDF4 100%);
+        }
+
+        &.rank-good {
+          border-left-color: $thunder-light-blue;
+          background: linear-gradient(135deg, white 0%, #F0F9FF 100%);
+        }
+
+        &.rank-average {
+          border-left-color: $thunder-yellow;
+          background: linear-gradient(135deg, white 0%, #FFFBEB 100%);
+        }
+
+        &.rank-below-average {
+          border-left-color: $thunder-orange;
+          background: linear-gradient(135deg, white 0%, #FEF2F2 100%);
+        }
+
+        .rank-label {
+          display: block;
+          color: $text-light;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 0.75rem;
+        }
+
+        .rank-value {
+          display: block;
+          color: $thunder-navy;
+          font-size: 2rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  // Action Type Section
+  .action-type-section {
+    margin-bottom: 2rem;
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .action-type-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      button {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 2px solid $medium-gray;
+        background: white;
+        color: $text-dark;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          border-color: $thunder-blue;
+          color: $thunder-blue;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 122, 193, 0.15);
+        }
+
+        &.mat-primary {
+          background: $thunder-blue;
+          border-color: $thunder-blue;
+          color: white;
+          box-shadow: 0 4px 12px rgba(0, 122, 193, 0.3);
+        }
+      }
+    }
+
+    .action-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+
+      .action-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        mat-card-header {
+          background: linear-gradient(135deg, $thunder-navy 0%, $thunder-dark 100%);
+          padding: 1.5rem;
+
+          mat-card-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+          }
+        }
+
+        mat-card-content {
+          padding: 1.5rem;
+
+          .action-stats {
+            .stat-row {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 0.75rem 0;
+              border-bottom: 1px solid $medium-gray;
+
+              &:last-child {
+                border-bottom: none;
+              }
+
+              span:first-child {
+                color: $text-light;
+                font-weight: 600;
+                font-size: 0.95rem;
+              }
+
+              span:last-child {
+                color: $thunder-navy;
+                font-weight: 700;
+                font-size: 1.1rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Shot Chart Section
+  .shot-chart-section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .shot-filters {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+
+      mat-checkbox {
+        ::ng-deep .mat-checkbox-label {
+          color: $text-dark;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .court-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+
+      canvas {
+        border: 2px solid $medium-gray;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        background: #F8F9FA;
+      }
+
+      .shot-legend {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .legend-marker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #000;
+
+            &.made-2pt {
+              background: rgba(0, 255, 0, 0.6);
+            }
+
+            &.made-3pt {
+              background: rgba(0, 100, 255, 0.6);
+            }
+
+            &.missed {
+              background: rgba(255, 0, 0, 0.6);
+            }
+          }
+
+          span {
+            color: $text-dark;
+            font-weight: 600;
+            font-size: 0.95rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Stats Chart Section
+  .stats-chart-section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+    }
+  }
+
+  // Advanced Metrics Section
+  .advanced-metrics-section {
+    margin-bottom: 2rem;
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+
+      .metric-card {
+        background: linear-gradient(135deg, white 0%, $light-gray 100%);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-top: 3px solid $thunder-light-blue;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0, 169, 224, 0.2);
+          border-top-color: $thunder-blue;
+        }
+
+        .metric-label {
+          display: block;
+          color: $text-light;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 0.75rem;
+        }
+
+        .metric-value {
+          display: block;
+          color: $thunder-navy;
+          font-size: 1.8rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  // Hot Zones Section
+  .hot-zones-section {
+    margin-bottom: 2rem;
+
+    h2 {
+      color: $thunder-navy;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid $thunder-orange;
+    }
+
+    .hot-zones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+
+      .zone-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border-left: 4px solid $medium-gray;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        &.zone-hot {
+          border-left-color: $thunder-orange;
+          background: linear-gradient(135deg, white 0%, #FEF2F2 100%);
+        }
+
+        &.zone-warm {
+          border-left-color: $thunder-yellow;
+          background: linear-gradient(135deg, white 0%, #FFFBEB 100%);
+        }
+
+        &.zone-cold {
+          border-left-color: $thunder-light-blue;
+          background: linear-gradient(135deg, white 0%, #F0F9FF 100%);
+        }
+
+        h3 {
+          color: $thunder-navy;
+          font-size: 1.1rem;
+          font-weight: 700;
+          margin: 0 0 1rem 0;
+        }
+
+        .zone-stats {
+          .zone-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid $medium-gray;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            span:first-child {
+              color: $text-light;
+              font-weight: 600;
+              font-size: 0.9rem;
+            }
+
+            span:last-child {
+              color: $thunder-navy;
+              font-weight: 700;
+              font-size: 1rem;
+            }
+
+            .rating-badge {
+              background: $thunder-blue;
+              color: white;
+              padding: 0.25rem 0.75rem;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 700;
+              letter-spacing: 0.5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    .player-summary-container {
+      padding: 1rem;
+    }
+
+    .player-header h1 {
+      font-size: 2rem;
+    }
+
+    .rankings-grid,
+    .action-type-grid,
+    .metrics-grid,
+    .hot-zones-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .action-type-filters {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
   }
 }

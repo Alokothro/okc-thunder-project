@@ -11,6 +11,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PlayersService} from 'app/_services/players.service';
 
@@ -29,6 +31,8 @@ import {PlayersService} from 'app/_services/players.service';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule
   ],
