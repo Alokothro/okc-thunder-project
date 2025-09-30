@@ -4,20 +4,20 @@ FROM node:16-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps
+# Install dependencies with legacy peer deps
+RUN npm ci --legacy-peer-deps --ignore-scripts
 
-# Copy application files
+# Copy all application files
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the Angular application
+RUN npm run build --if-present || ng build --configuration production --output-hashing none
 
-# Expose port
+# Expose port (Railway uses PORT env var)
 EXPOSE 8080
 
-# Start the server
+# Start the Express server
 CMD ["node", "server.js"]
