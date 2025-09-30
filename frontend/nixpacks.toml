@@ -1,11 +1,14 @@
 [phases.setup]
-nixPkgs = ["nodejs-16_x", "npm-8_x"]
+nixPkgs = ["nodejs-16_x"]
 
 [phases.install]
-cmds = ["npm ci --legacy-peer-deps"]
+cmds = ["npm ci --legacy-peer-deps --prefer-offline"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
 cmd = "node server.js"
+
+[variables]
+NODE_ENV = "production"
