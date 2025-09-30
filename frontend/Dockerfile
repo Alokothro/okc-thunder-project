@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies with legacy peer deps
-RUN npm ci --legacy-peer-deps --ignore-scripts
+RUN npm ci --legacy-peer-deps
 
 # Copy all application files
 COPY . .
 
 # Build the Angular application
-RUN npm run build --if-present || ng build --configuration production --output-hashing none
+RUN npm run build
 
 # Expose port (Railway uses PORT env var)
 EXPOSE 8080
