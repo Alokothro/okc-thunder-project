@@ -4,6 +4,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Health check endpoint for Railway
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, 'dist')));
 
