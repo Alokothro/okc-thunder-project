@@ -7,11 +7,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies including devDependencies (needed for Angular CLI)
+# Install dependencies
 RUN npm ci --legacy-peer-deps
 
 # Copy source files
 COPY . .
+
+# Create dist directory to prevent Angular error
+RUN mkdir -p dist
 
 # Build Angular app
 RUN npx ng build --configuration production
