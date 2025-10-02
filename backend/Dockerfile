@@ -28,7 +28,8 @@ ENV DJANGO_SETTINGS_MODULE=app.settings
 # Create static directory
 RUN mkdir -p /app/static
 
-# Run migrations and start server
+# Run migrations, load data, and start server
 CMD python manage.py migrate && \
     python manage.py collectstatic --noinput && \
+    python scripts/load_data.py && \
     gunicorn app.wsgi --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120 --access-logfile - --error-logfile -
