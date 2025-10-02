@@ -122,7 +122,7 @@
               </div>
               <div class="stat-row">
                 <span>FG%:</span>
-                <span>{{ playerSummary.pickAndRoll.fieldGoalPercentage.toFixed(1) }}%</span>
+                <span>{{ playerSummary.pickAndRoll.fieldGoalPercentage != null ? playerSummary.pickAndRoll.fieldGoalPercentage.toFixed(1) + '%' : '0.0%' }}</span>
               </div>
               <div class="stat-row">
                 <span>Shots:</span>
@@ -148,7 +148,7 @@
               </div>
               <div class="stat-row">
                 <span>FG%:</span>
-                <span>{{ playerSummary.isolation.fieldGoalPercentage.toFixed(1) }}%</span>
+                <span>{{ playerSummary.isolation.fieldGoalPercentage != null ? playerSummary.isolation.fieldGoalPercentage.toFixed(1) + '%' : '0.0%' }}</span>
               </div>
               <div class="stat-row">
                 <span>Shots:</span>
@@ -174,7 +174,7 @@
               </div>
               <div class="stat-row">
                 <span>FG%:</span>
-                <span>{{ playerSummary.postUp.fieldGoalPercentage.toFixed(1) }}%</span>
+                <span>{{ playerSummary.postUp.fieldGoalPercentage != null ? playerSummary.postUp.fieldGoalPercentage.toFixed(1) + '%' : '0.0%' }}</span>
               </div>
               <div class="stat-row">
                 <span>Shots:</span>
@@ -200,7 +200,7 @@
               </div>
               <div class="stat-row">
                 <span>FG%:</span>
-                <span>{{ playerSummary.offBallScreen.fieldGoalPercentage.toFixed(1) }}%</span>
+                <span>{{ playerSummary.offBallScreen.fieldGoalPercentage != null ? playerSummary.offBallScreen.fieldGoalPercentage.toFixed(1) + '%' : '0.0%' }}</span>
               </div>
               <div class="stat-row">
                 <span>Shots:</span>
@@ -264,27 +264,27 @@
       <div class="metrics-grid">
         <div class="metric-card">
           <span class="metric-label">True Shooting %</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.trueShootingPercentage.toFixed(1) }}%</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.trueShootingPercentage != null ? playerSummary.advancedMetrics.trueShootingPercentage.toFixed(1) + '%' : 'N/A' }}</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Player Efficiency</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.playerEfficiencyRating.toFixed(1) }}</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.playerEfficiencyRating != null ? playerSummary.advancedMetrics.playerEfficiencyRating.toFixed(1) : 'N/A' }}</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Assist/TO Ratio</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.assistToTurnoverRatio }}</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.assistToTurnoverRatio ?? 'N/A' }}</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Usage Rate</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.usageRate.toFixed(1) }}%</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.usageRate != null ? playerSummary.advancedMetrics.usageRate.toFixed(1) + '%' : 'N/A' }}</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Points per Shot</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.pointsPerShot.toFixed(2) }}</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.pointsPerShot != null ? playerSummary.advancedMetrics.pointsPerShot.toFixed(2) : 'N/A' }}</span>
         </div>
         <div class="metric-card">
           <span class="metric-label">Clutch FG %</span>
-          <span class="metric-value">{{ playerSummary.advancedMetrics.clutchStats.clutchShootingPercentage.toFixed(1) }}%</span>
+          <span class="metric-value">{{ playerSummary.advancedMetrics?.clutchStats?.clutchShootingPercentage != null ? playerSummary.advancedMetrics.clutchStats.clutchShootingPercentage.toFixed(1) + '%' : 'N/A' }}</span>
         </div>
       </div>
     </div>
@@ -299,7 +299,7 @@
           <div class="zone-stats">
             <div class="zone-stat">
               <span>FG%:</span>
-              <span>{{ zone.percentage.toFixed(1) }}%</span>
+              <span>{{ zone.percentage != null ? zone.percentage.toFixed(1) + '%' : 'N/A' }}</span>
             </div>
             <div class="zone-stat">
               <span>Attempts:</span>
