@@ -13,7 +13,18 @@ app-component {
     font-weight: bold;
     text-transform: uppercase;
     padding-left: 20px;
+    padding-right: 20px;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-logo {
+      height: 50px;
+      width: auto;
+      margin-right: 10px;
+      object-fit: contain;
+    }
   }
 
   .mat-tab-list {

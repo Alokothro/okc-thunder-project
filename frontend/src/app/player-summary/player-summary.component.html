@@ -110,7 +110,7 @@
 
       <!-- Action Type Stats Grid -->
       <div class="action-type-grid">
-        <mat-card class="action-card">
+        <mat-card class="action-card" *ngIf="selectedActionType === 'all' || selectedActionType === 'pickAndRoll'">
           <mat-card-header>
             <mat-card-title>Pick & Roll</mat-card-title>
           </mat-card-header>
@@ -136,7 +136,7 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="action-card">
+        <mat-card class="action-card" *ngIf="selectedActionType === 'all' || selectedActionType === 'isolation'">
           <mat-card-header>
             <mat-card-title>Isolation</mat-card-title>
           </mat-card-header>
@@ -162,7 +162,7 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="action-card">
+        <mat-card class="action-card" *ngIf="selectedActionType === 'all' || selectedActionType === 'postUp'">
           <mat-card-header>
             <mat-card-title>Post-Up</mat-card-title>
           </mat-card-header>
@@ -188,7 +188,7 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="action-card">
+        <mat-card class="action-card" *ngIf="selectedActionType === 'all' || selectedActionType === 'offBallScreen'">
           <mat-card-header>
             <mat-card-title>Off-Ball Screen</mat-card-title>
           </mat-card-header>
