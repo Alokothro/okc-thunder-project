@@ -354,7 +354,7 @@ BACKEND_PUBLIC_DOMAIN=https://backend-production-af17.up.railway.app
 
 📧 Email: alokothro@gmail.com
 🔗 GitHub: [@Alokothro](https://github.com/Alokothro)
-💼 LinkedIn: [Connect with me](https://www.linkedin.com/in/alok-patel)
+💼 LinkedIn: [Connect with me](https://www.linkedin.com/in/alokothro/)
 
 Built for the **OKC Thunder Software Engineer Internship Technical Assessment**
 
