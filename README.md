@@ -1,3 +1,8 @@
+> **Note**
+> **Archived**
+>
+> This project was completed as a technical assessment and is no longer actively maintained. The codebase is preserved as-is for reference.
+
 # OKC Thunder Player Analytics Dashboard ⚡🏀
 
 A full-stack NBA player performance tracking and visualization platform built with Django REST Framework, PostgreSQL, Angular, and D3.js. Features comprehensive player statistics, shot chart visualizations, and advanced basketball analytics.
