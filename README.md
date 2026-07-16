@@ -1,4 +1,4 @@
-> **Note**
+> [!NOTE]
 > **Archived**
 >
 > This project was completed as a technical assessment and is no longer actively maintained. The codebase is preserved as-is for reference.
